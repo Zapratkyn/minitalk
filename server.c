@@ -6,17 +6,18 @@
 /*   By: gponcele <gponcele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/29 14:17:30 by gponcele          #+#    #+#             */
-/*   Updated: 2022/09/01 18:13:17 by gponcele         ###   ########.fr       */
+/*   Updated: 2022/09/06 14:00:35 by gponcele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "includes/minitalk.h"
 
-void	req_trt(int signum, siginfo_t *info, void *context)
+void	req_trt(int signum)
 {
-	
-
-	(void)context;
+	static int	len;
+	static char	*str;
+	static int	octet;
+	int 		i;
 }
 
 int	main(void)
@@ -25,9 +26,9 @@ int	main(void)
 	struct sigaction	sa_signal;
 
 	pid = getpid();
-	ft_printf("%d", pid);
-	sa_signal.sa_sigaction = req_trt;
-	sa_signal.sa_flags = SA_SIGINFO;
+	ft_printf("\n\n\n\t\tBienvenue sur minitalk !\n\n\n");
+	ft_printf("Utilisez le PID [%d] pour entamer un échange avec moi.\n", pid);
+	sa_signal.sa_handler = req_trt;
 	while (1)
 	{
 		sigaction(SIGUSR1, &sa_signal, 0);
