@@ -62,7 +62,7 @@ void	req_trt(int signal)
 		character = bin_to_char(byte);
 		if (character != 0)
 			write (1, &character, 1);
-		if (character == 0)
+		else
 			write (1, "\n", 1);
 		i = 0;
 	}
