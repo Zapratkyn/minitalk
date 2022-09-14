@@ -71,7 +71,7 @@ void	req_trt(int signal)
 
 int	main(void)
 {
-	pid_t				pid;
+	pid_t			pid;
 	struct sigaction	sa_signal;
 
 	pid = getpid();
