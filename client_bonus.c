@@ -1,16 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   client.c                                           :+:      :+:    :+:   */
+/*   client_bonus.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gponcele <gponcele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/29 14:17:11 by gponcele          #+#    #+#             */
-/*   Updated: 2022/09/14 16:11:47 by gponcele         ###   ########.fr       */
+/*   Updated: 2022/09/14 16:38:54 by gponcele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "includes/minitalk.h"
+
+static void	response(int sig)
+{
+	usleep(300);
+	if (sig == SIGUSR2)
+	{
+		ft_printf("Message reçu et affiché");
+		exit(0);
+	}
+}
 
 void	send(char *str, int server_pid)
 {
@@ -30,7 +40,9 @@ void	send(char *str, int server_pid)
 			else if (str[i] % 2 == 0)
 				kill(server_pid, SIGUSR2);
 			str[i] /= 2;
-			usleep(300);
+			signal(SIGUSR1, response);
+			signal(SIGUSR2, response);
+			pause();
 			j++;
 		}
 		i++;
@@ -49,6 +61,7 @@ int	main(int argc, char **argv)
 			ft_printf("ERROR : INVALID PID\n");
 			return (EXIT_FAILURE);
 		}
+		ft_printf("En attente de réponse du serveur");
 		send(argv[2], server_pid);
 		return (EXIT_SUCCESS);
 	}

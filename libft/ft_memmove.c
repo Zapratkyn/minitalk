@@ -6,7 +6,7 @@
 /*   By: gponcele <gponcele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/05 15:06:44 by gponcele          #+#    #+#             */
-/*   Updated: 2022/07/18 12:17:13 by gponcele         ###   ########.fr       */
+/*   Updated: 2022/09/14 16:14:28 by gponcele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,11 +19,11 @@ void	*ft_memmove(void *dst, const void *src, size_t len)
 	unsigned char	*my_src;
 
 	my_dest = (unsigned char *)(dst);
-	my_src = (unsigned char *)(src); // On crée les chaînes temporaires
+	my_src = (unsigned char *)(src);
 	i = 0;
 	if (!my_dest && !my_src)
 		return (0);
-	if (my_dest > my_src) // Si dst est plus grande que src
+	if (my_dest > my_src)
 	{
 		while (len > 0)
 		{
@@ -31,7 +31,7 @@ void	*ft_memmove(void *dst, const void *src, size_t len)
 			len--;
 		}
 	}
-	while (i < len) // Si src est plus grande que dst
+	while (i < len)
 	{
 		my_dest[i] = my_src[i];
 		i++;

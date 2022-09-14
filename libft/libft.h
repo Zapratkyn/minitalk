@@ -6,7 +6,7 @@
 /*   By: gponcele <gponcele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/29 17:00:00 by gponcele          #+#    #+#             */
-/*   Updated: 2022/09/01 17:57:30 by gponcele         ###   ########.fr       */
+/*   Updated: 2022/09/14 16:16:55 by gponcele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 # include	<stdlib.h>
 # include	<unistd.h>
 # include	<string.h>
-# include 	<stdarg.h>
+# include	<stdarg.h>
 
 int				ft_isalpha(int c);
 int				ft_isdigit(int c);
@@ -54,10 +54,10 @@ void			ft_putstr_fd(char *s, int fd);
 void			ft_putendl_fd(char *s, int fd);
 void			ft_putnbr_fd(int n, int fd);
 
-typedef struct	s_list
+typedef struct s_list
 {
-		void	*content;
-		struct	s_list	*next;
+	void			*content;
+	struct s_list	*next;
 }		t_list;
 t_list			*ft_lstnew(void *content);
 void			ft_lstadd_front(t_list **lst, t_list *new);
@@ -84,7 +84,8 @@ int				ft_print_unsigned(unsigned int nb);
 int				ft_print_hex(unsigned int n, const char format);
 int				ft_print_ptr(unsigned long ptr);
 int				ft_get_hex_ptr_len(unsigned long n);
-char			*ft_get_hex(unsigned int num, const char format, unsigned int len);
+char			*ft_get_hex(unsigned int num, const char format,
+					unsigned int len);
 char			*ft_get_ptr(unsigned long num, unsigned int len);
 
 #endif

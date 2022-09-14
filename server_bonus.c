@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   server.c                                           :+:      :+:    :+:   */
+/*   server_bonus.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gponcele <gponcele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/29 14:17:30 by gponcele          #+#    #+#             */
-/*   Updated: 2022/09/14 16:13:48 by gponcele         ###   ########.fr       */
+/*   Updated: 2022/09/14 16:29:20 by gponcele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,12 +50,13 @@ int	fill_byte(int signal)
 	return (0);
 }
 
-void	req_trt(int signal)
+void	req_trt(int signal, siginfo_t *info, void *context)
 {
 	static int		byte[8];
 	char			character;
 	static int		i = 0;
 
+	(void)context;
 	byte[i] = fill_byte(signal);
 	i++;
 	if (i > 7)
@@ -64,7 +65,10 @@ void	req_trt(int signal)
 		if (character != 0)
 			write (1, &character, 1);
 		if (character == 0)
+		{
 			write (1, "\n", 1);
+			kill(info->si_pid, SIGUSR2);
+		}
 		i = 0;
 	}
 	usleep(100);
@@ -78,7 +82,8 @@ int	main(void)
 	pid = getpid();
 	ft_printf("\n\n\n\t\tBienvenue sur minitalk !\n\n\n");
 	ft_printf("Utilisez le PID [%d] pour entamer un échange avec moi.\n\n\n", pid);
-	sa_signal.sa_handler = req_trt;
+	sa_signal.sa_sigaction = req_trt;
+	sa_signal.sa_flags = SA_SIGINFO;
 	while (1)
 	{
 		sigaction(SIGUSR1, &sa_signal, 0);
