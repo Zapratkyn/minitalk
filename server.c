@@ -56,8 +56,7 @@ void	req_trt(int signal)
 	char			character;
 	static int		i = 0;
 
-	byte[i] = fill_byte(signal);
-	i++;
+	byte[i++] = fill_byte(signal);
 	if (i > 7)
 	{
 		character = bin_to_char(byte);
