@@ -6,7 +6,7 @@
 /*   By: gponcele <gponcele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/29 14:17:11 by gponcele          #+#    #+#             */
-/*   Updated: 2022/09/14 16:38:54 by gponcele         ###   ########.fr       */
+/*   Updated: 2022/09/15 12:13:08 by gponcele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ static void	response(int sig)
 	usleep(300);
 	if (sig == SIGUSR2)
 	{
-		ft_printf("Message reçu et affiché");
+		ft_printf("Message reçu et affiché. Bien joué !\n\n\n");
 		exit(0);
 	}
 }
@@ -61,7 +61,7 @@ int	main(int argc, char **argv)
 			ft_printf("ERROR : INVALID PID\n");
 			return (EXIT_FAILURE);
 		}
-		ft_printf("En attente de réponse du serveur");
+		ft_printf("En attente de réponse du serveur...\n\n\n");
 		send(argv[2], server_pid);
 		return (EXIT_SUCCESS);
 	}

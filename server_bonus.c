@@ -6,7 +6,7 @@
 /*   By: gponcele <gponcele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/29 14:17:30 by gponcele          #+#    #+#             */
-/*   Updated: 2022/09/14 16:29:20 by gponcele         ###   ########.fr       */
+/*   Updated: 2022/09/15 12:08:09 by gponcele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,8 +55,10 @@ void	req_trt(int signal, siginfo_t *info, void *context)
 	static int		byte[8];
 	char			character;
 	static int		i = 0;
+	pid_t			client_pid;
 
 	(void)context;
+	client_pid = info->si_pid;
 	byte[i] = fill_byte(signal);
 	i++;
 	if (i > 7)
@@ -67,11 +69,12 @@ void	req_trt(int signal, siginfo_t *info, void *context)
 		if (character == 0)
 		{
 			write (1, "\n", 1);
-			kill(info->si_pid, SIGUSR2);
+			kill(client_pid, SIGUSR2);
 		}
 		i = 0;
 	}
 	usleep(100);
+	kill(client_pid, SIGUSR1);
 }
 
 int	main(void)
