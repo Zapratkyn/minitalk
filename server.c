@@ -6,82 +6,85 @@
 /*   By: gponcele <gponcele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/29 14:17:30 by gponcele          #+#    #+#             */
-/*   Updated: 2022/09/14 16:13:48 by gponcele         ###   ########.fr       */
+/*   Updated: 2022/09/26 14:19:01 by gponcele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "includes/minitalk.h"
 
-int	ft_pow(int exp)
+int	get_len(int sig, int step)
 {
 	int	result;
+	int	exp;
 
+	exp = step - 1;
 	result = 1;
-	while (exp > 0)
+	if (sig == SIGUSR1)
 	{
-		result = result * 2;
-		exp--;
-	}
-	return (result);
-}
-
-char	bin_to_char(int *byte)
-{
-	int	i;
-	int	c;
-
-	i = 7;
-	c = 0;
-	while (i >= 0)
-	{
-		if (byte[i] == 1)
+		while (exp > 0)
 		{
-			c += ft_pow(i);
+			result = result * 2;
+			exp--;
 		}
-		i--;
+		return (result);
 	}
-	return (c);
+	return (0);
 }
 
-int	fill_byte(int signal)
+int	ft_display(char *str, char c)
 {
-	if (signal == SIGUSR1)
+	static int	a = 0;
+
+	str[a] = c;
+	if (str[a] == '\0')
+	{
+		ft_printf("%s\n", str);
+		free(str);
+		a = 0;
 		return (1);
-	return (0);
+	}
+	a++;
+	return (33);
 }
 
 void	req_trt(int signal)
 {
 	static int		byte[8];
-	char			character;
 	static int		i = 0;
+	static int		step = 1;
+	static int		k = 0;
+	static char		*str = NULL;
 
-	byte[i++] = fill_byte(signal);
-	if (i > 7)
+	if (step < 32)
+		k += get_len(signal, step++);
+	else if (step++ == 32)
+		str = malloc(sizeof(char) * (k + 1));
+	else if (step > 32)
 	{
-		character = bin_to_char(byte);
-		if (character != 0)
-			write (1, &character, 1);
-		else
-			write (1, "\n", 1);
-		i = 0;
+		if (!str)
+			exit (0);
+		byte[i++] = fill_byte(signal);
+		if (i > 7)
+		{
+			step = ft_display(str, bin_to_char(byte));
+			if (step == 1)
+				k = 0;
+			i = 0;
+		}
 	}
-	usleep(100);
 }
 
 int	main(void)
 {
-	pid_t			pid;
-	struct sigaction	sa_signal;
+	pid_t				pid;
 
 	pid = getpid();
 	ft_printf("\n\n\n\t\tBienvenue sur minitalk !\n\n\n");
 	ft_printf("Utilisez le PID [%d] pour entamer un échange avec moi.\n\n\n", pid);
-	sa_signal.sa_handler = req_trt;
 	while (1)
 	{
-		sigaction(SIGUSR1, &sa_signal, 0);
-		sigaction(SIGUSR2, &sa_signal, 0);
+		signal(SIGUSR1, req_trt);
+		signal(SIGUSR2, req_trt);
 		pause();
 	}
 	return (EXIT_SUCCESS);
