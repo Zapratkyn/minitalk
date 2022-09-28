@@ -6,7 +6,7 @@
 /*   By: gponcele <gponcele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/29 14:17:11 by gponcele          #+#    #+#             */
-/*   Updated: 2022/09/23 17:40:01 by gponcele         ###   ########.fr       */
+/*   Updated: 2022/09/28 15:40:11 by gponcele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ int	main(int argc, char **argv)
 	if (argc == 3)
 	{
 		len = ft_strlen(argv[2]);
-		if (!len)
+		if (len > 2147483647)
 		{
 			ft_printf("MESSAGE TOO LONG\n");
 			return (EXIT_FAILURE);
