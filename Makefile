@@ -6,7 +6,7 @@
 #    By: gponcele <gponcele@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/08/29 14:17:23 by gponcele          #+#    #+#              #
-#    Updated: 2022/09/26 13:46:43 by gponcele         ###   ########.fr        #
+#    Updated: 2022/09/28 13:33:36 by gponcele         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -52,11 +52,9 @@ $(SERVER_BONUS): $(OBJS_S_BONUS)
 		$(CC) $(FLAGS) $(INCLUDES) $(LIBFT) $(SRC_S_BONUS) -o $(SERVER_BONUS)
 
 clean:
-		$(MAKE) clean -C ./libft
 		rm -rf $(OBJS_S) $(OBJS_C) $(OBJS_S_BONUS) $(OBJS_C_BONUS)
 
 fclean:	clean
-		$(MAKE) fclean -C ./libft
 		rm -rf $(CLIENT) $(SERVER) $(CLIENT_BONUS) $(SERVER_BONUS)
 
 re:	fclean all
